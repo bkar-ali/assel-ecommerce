@@ -1,0 +1,151 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  overflow-y: auto !important;
+  height: auto !important;
+}
+
+:root {
+  /* Page Colors */
+  --primary: 236, 233, 226; /* #ece9e2 */
+  /* --secondary:  */
+  /* Text */
+  --text-main: 0, 0, 0; /* black  --> b & w */
+  --text-card: 0, 0, 0; /* black  -- b & g */
+  --text-heart: 158, 151, 138; /* #9e978a */
+  --text-price: 156, 15, 15; /* #9c0f0f */
+  --text-sale: 75, 85, 99; /* #4b5563 */
+  --text-footer: 255, 255, 255; /* white */
+  /* Background */
+  --bg-main: 224, 218, 207; /* #e0dacf 26, 35, 52 --> c & g */
+  --bg-card: 255, 255, 255; /* white --> w & bl */
+  --bg-megaMenu: 236, 233, 226; /* #ece9e2 --> w & bl */
+}
+
+.dark {
+  /* Page Colors */
+  --primary: 5, 5, 5; /* #050505 */
+  /* --secondary:  */
+  /* Text */
+  --text-main: 255, 255, 255; /* white */
+  --text-card: 160, 133, 89; /* #a08559 */
+  --text-heart: 160, 133, 89; /* #a08559 */
+  --text-price: 160, 133, 89; /* #a08559 */
+  --text-sale: 160, 133, 89; /* #a08559 */
+  --text-footer: 160, 133, 89; /* #a08559 */
+  /* Background */
+  --bg-main: 160, 133, 89; /* #a08559 26, 35, 52 */
+  --bg-card: 26, 35, 52; /* #1a2334 */
+  --bg-megaMenu: 20, 25, 35; /* #141923 --> w & bl */
+}
+
+/* @layer base {
+  * {
+    @apply transition-colors duration-300 ease-in-out;
+  }
+} */
+/* ! Remove Scroll Bar
+ @layer base {
+  html {
+    scrollbar-gutter: stable;
+  }
+}  
+html {
+  scrollbar-gutter: stable;
+} 
+*/
+
+/* #ece9e2 */
+
+.cart-scroll::-webkit-scrollbar {
+  width: 7px;
+}
+
+.cart-scroll::-webkit-scrollbar-track {
+  /* background: blue; */
+  background: #1a2334;
+}
+
+.cart-scroll::-webkit-scrollbar-thumb {
+  background: #a08559;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+.bkar {
+  background-image: repeating-radial-gradient(
+    circle at 0px 0px,
+    rgb(121 106 106) 0 0px,
+    transparent 3px 40px
+  );
+  background-size: 23px 30px;
+  border-radius: 80px;
+}
+
+.fade-edges {
+  mask-image: radial-gradient(circle at center, black 60%, #ffffff00 90%);
+}
+
+/* Optional: smooth transition for color/background changes */
+/* html,
+body {
+  transition: background-color 0.25s ease, color 0.25s ease;
+} */
+
+body {
+  /* background: #0a0a0a; */
+  /* background: rgb(236, 233, 226); */
+  /* font-family: Arial, Helvetica, sans-serif; */
+  font-family: "Raleway Variable", sans-serif;
+}
+.page-container {
+  padding: 0 12px 0 12px;
+  margin: 0 12px 0 12px;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  /* opacity: 0.4; */
+  color: rgba(255, 255, 255, 0.3) !important;
+  transition: color 0.3s ease;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* لون الكور */
+.swiper-pagination-bullet {
+  background-color: rgba(255, 255, 255, 0.5) !important; /* أبيض شفاف */
+  width: 12px;
+  height: 12px;
+  opacity: 1;
+  transition: all 0.3s ease;
+}
+
+/* الكورة النشطة */
+.swiper-pagination-bullet-active {
+  background-color: white !important; /* أبيض كامل */
+  transform: scale(1.3);
+}
+
+@keyframes fill {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.animate-fill {
+  animation: fill 3s linear forwards;
+  animation-play-state: running;
+}
+.paused {
+  animation-play-state: paused;
+}
