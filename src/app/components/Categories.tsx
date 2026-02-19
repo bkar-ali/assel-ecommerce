@@ -70,7 +70,7 @@ const Categories = () => {
               alt={store.title}
               fill
               className="object-cover rounded-xl group-hover:blur-[2px] group-hover:scale-110 duration-700"
-              loading="lazy"
+
               //   width={700}
               //   height={700}
             />
