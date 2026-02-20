@@ -32,7 +32,7 @@ const sweaters: sweater[] = [
   },
   {
     id: "gray",
-    image: "/Sweaters/grayyy.png",
+    image: "/public/Sweaters/grayyy.PNG",
     url: "/Sweaters/grayUrl.jpg",
     title: "Gray Sweater",
     description: "Your cozy go-to for staying in or stepping out.",
