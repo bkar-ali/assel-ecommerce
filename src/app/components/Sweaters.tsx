@@ -32,7 +32,7 @@ const sweaters: sweater[] = [
   },
   {
     id: "gray",
-    image: "/public/Sweaters/grayyy.PNG",
+    image: "/Sweaters/grayyy.PNG",
     url: "/Sweaters/grayUrl.jpg",
     title: "Gray Sweater",
     description: "Your cozy go-to for staying in or stepping out.",
@@ -145,7 +145,7 @@ const Sweaters = () => {
                 {/* Sec Half */}
                 <div className="flex justify-center items-center w-full md:w-1/2 h-full ">
                   <div className="relative rounded-2xl overflow-hidden w-[75%] h-[95%] ">
-                    <div className="z-50 flex gap-2 absolute bottom-5 left-1/2 -translate-x-1/2 w-[50%]">
+                    <div className="z-50 gap-2 absolute bottom-5 left-1/2 -translate-x-1/2 w-[50%] hidden md:flex">
                       {sweaters.map((_, index) => (
                         <div
                           key={index}
