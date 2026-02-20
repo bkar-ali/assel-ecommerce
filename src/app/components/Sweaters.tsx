@@ -25,22 +25,22 @@ type sweater = {
 const sweaters: sweater[] = [
   {
     id: "red",
-    image: "/sweaters/darkRed.png",
-    url: "/sweaters/darkRedUrl.jpg",
+    image: "/Sweaters/darkRed.png",
+    url: "/Sweaters/darkRedUrl.jpg",
     title: "Dark Red Sweater",
     description: "Your cozy go-to for staying in or stepping out.",
   },
   {
     id: "gray",
-    image: "/sweaters/grayyy.png",
-    url: "/sweaters/grayUrl.jpg",
+    image: "/Sweaters/grayyy.png",
+    url: "/Sweaters/grayUrl.jpg",
     title: "Gray Sweater",
     description: "Your cozy go-to for staying in or stepping out.",
   },
   {
     id: "brown",
-    image: "/sweaters/brown.png",
-    url: "/sweaters/brownUrl.jpeg",
+    image: "/Sweaters/brown.png",
+    url: "/Sweaters/brownUrl.jpeg",
     title: "Brown Sweater",
     description: "Your cozy go-to for staying in or stepping out.",
   },
