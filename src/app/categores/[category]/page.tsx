@@ -1,8 +1,5 @@
 "use client";
-// JSON.stringify → تحويل Array/Object إلى String للحفظ
-
-// JSON.parse → تحويل String إلى Array/Object للقراءة
-// #1a2334 #a08559
+import toast from "react-hot-toast";
 import { useParams } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/store/asselHooks";
 import {
@@ -50,9 +47,15 @@ const categoryThunk: Record<CategoryKey, categoryThunkType> = {
 };
 
 const Page = () => {
+  const clotheSizesArr = ["S", "M", "L", "XL", "2XL", "3XL"];
   const fitsNum = useMemo(() => {
     const arr = [];
-    for (let i = 5; i <= 11; i += 0.5) arr.push(i);
+    for (let i = 30; i <= 45; i += 1) arr.push(i);
+    return arr;
+  }, []);
+  const watchesSize = useMemo(() => {
+    const arr = [];
+    for (let i = 14; i <= 20; i += 1) arr.push(i);
     return arr;
   }, []);
   const [sizePage, setSizePage] = useState<boolean>(false);
@@ -164,11 +167,12 @@ const Page = () => {
   }
   //Safety
 
-  const handelAddTocart = (id: number, size: number) => {
+  const handelAddTocart = (id: number, size: number | string) => {
     const p = product.find((item) => item.id === +id);
     if (!product || !p || !size) return;
     const productWithSize = { ...p, size: size, link: category };
-    dispatch(openCart());
+    // dispatch(openCart());
+    toast.success("Added To Cart 🛒");
     dispatch(addToCart(productWithSize));
   };
 
@@ -308,6 +312,7 @@ const Page = () => {
                     >
                       <button>Explore More</button>
                     </Link>
+                    {/* Add To Cart Mobile Preview */}
                     <button
                       className="lg:hidden text-sm bg-bgMain text-black font-medium w-full px-3 py-1 md:py-2 rounded-xl mt-2 md:hover:scale-105 duration-300 flex justify-center items-center"
                       onClick={() => {
@@ -320,26 +325,63 @@ const Page = () => {
                     </button>
                   </div>
                   <div
-                    className={`w-full min-h-[25vh] p-5 absolute top-[95%] left-0 z-50 hidden lg:group-hover:block group-hover:shadow-2xl group-hover:shadow-[#00000074] dark:group-hover:shadow-lg dark:group-hover:shadow-[#a0855989]/20 duration-300 bg-bgCard rounded-xl`}
+                    className={`w-full min-h-[15vh] p-5 absolute top-[95%] left-0 z-50 hidden lg:group-hover:block group-hover:shadow-2xl group-hover:shadow-[#00000074] dark:group-hover:shadow-lg dark:group-hover:shadow-[#a0855989]/20 duration-300 bg-bgCard rounded-xl`}
                   >
                     <div className="grid grid-cols-4 gap-2 justify-items-center">
-                      {fitsNum.map((num, index) => (
-                        <div key={index} className="font-sans">
-                          <div
-                            // onMouseEnter={() => setSize(num)}
-                            onClick={() => {
-                              handelAddTocart(item.id, num);
-                            }}
-                            className={`cursor-pointer duration-300 ${"text-textMain border border-gray-500 dark:border-[#a08559] hover:bg-gray-300 dark:hover:bg-[#a08559]/70"} duration-500 flex items-center justify-center w-14 h-10`}
-                          >
-                            {num}
+                      {/* Sizes For Sneakers & Heels */}
+                      {(category === "heels" || category === "sneakers") &&
+                        fitsNum.map((num, index) => (
+                          <div key={index} className="font-sans">
+                            <div
+                              // onMouseEnter={() => setSize(num)}
+                              onClick={() => {
+                                handelAddTocart(item.id, num);
+                              }}
+                              className={`cursor-pointer duration-300 ${"text-textMain border border-gray-500 dark:border-[#a08559] hover:bg-gray-300 dark:hover:bg-[#a08559]/70"} duration-500 flex items-center justify-center w-14 h-10`}
+                            >
+                              {num}
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
+                      {/* Sizes For T-shirts & Dreeses */}
+                      {(category === "men" ||
+                        category === "women" ||
+                        category === "jewelry") &&
+                        clotheSizesArr.map((size, index) => (
+                          <div key={index} className="font-sans">
+                            <div
+                              // onMouseEnter={() => setSize(num)}
+                              onClick={() => {
+                                handelAddTocart(item.id, size);
+                              }}
+                              className={`cursor-pointer duration-300 ${"text-textMain border border-gray-500 dark:border-[#a08559] hover:bg-gray-300 dark:hover:bg-[#a08559]/70"} duration-500 flex items-center justify-center min-w-10 min-h-8`}
+                            >
+                              {size}
+                            </div>
+                          </div>
+                        ))}
+                      {/* Sizes For Watches */}
+                      {(category === "watches" ||
+                        category === "womenwatches") &&
+                        watchesSize.map((size, index) => (
+                          <div key={index} className="font-sans">
+                            <div
+                              // onMouseEnter={() => setSize(num)}
+                              onClick={() => {
+                                handelAddTocart(item.id, size);
+                              }}
+                              className={`cursor-pointer duration-300 ${"text-textMain border border-gray-500 dark:border-[#a08559] hover:bg-gray-300 dark:hover:bg-[#a08559]/70"} duration-500 flex items-center justify-center min-w-10 min-h-8 p-1`}
+                            >
+                              {size}
+                              <span className="text-[12px] ml-1">mm</span>
+                            </div>
+                          </div>
+                        ))}
                     </div>
                   </div>
                 </div>
               ))}
+              {/* Sizes Mobile Preview */}
               {sizePage && activeProduct && (
                 <div
                   className="fixed bg-black/40 inset-0 z-[9999] flex justify-center items-center"
@@ -352,7 +394,7 @@ const Page = () => {
                     onClick={(e) => e.stopPropagation()}
                   >
                     <div className="flex justify-between items-center mb-3">
-                      <div>Select a Size</div>
+                      <div>Select Your Size</div>
                       <div
                         onClick={() => setSizePage(false)}
                         className="cursor-pointer md:text-xl"
@@ -374,21 +416,60 @@ const Page = () => {
                         />
                       </div>
                     </div>
+                    {/* Mobile Preview */}
                     <div className="grid grid-cols-4 gap-x-1 md:gap-x-3 md:gap-y-4 gap-y-2 justify-items-center items-center w-full h-[50%] mt-3">
-                      {fitsNum.map((num, index) => (
-                        <div key={index} className="font-sans">
-                          <div
-                            // onMouseEnter={() => setSize(num)}
-                            onClick={() => {
-                              handelAddTocart(activeProduct.id, num);
-                              setSizePage(false);
-                            }}
-                            className={`cursor-pointer duration-300 ${"text-textMain border border-gray-500 dark:border-[#a08559] hover:bg-gray-300 dark:hover:bg-[#a08559]/70"} duration-500 flex items-center justify-center w-14 h-10`}
-                          >
-                            {num}
+                      {/* Sizes For Sneakers & Heels */}
+                      {(category === "heels" || category === "sneakers") &&
+                        fitsNum.map((num, index) => (
+                          <div key={index} className="font-sans">
+                            <div
+                              // onMouseEnter={() => setSize(num)}
+                              onClick={() => {
+                                handelAddTocart(activeProduct.id, num);
+                                setSizePage(false);
+                              }}
+                              className={`cursor-pointer duration-300 ${"text-textMain border border-gray-500 dark:border-[#a08559] hover:bg-gray-300 dark:hover:bg-[#a08559]/70"} duration-500 flex items-center justify-center w-14 h-10`}
+                            >
+                              {num}
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
+                      {/* Sizes For T-shirts & Dreeses */}
+                      {(category === "men" ||
+                        category === "women" ||
+                        category === "jewelry") &&
+                        clotheSizesArr.map((size, index) => (
+                          <div key={index} className="font-sans">
+                            <div
+                              // onMouseEnter={() => setSize(num)}
+                              onClick={() => {
+                                handelAddTocart(activeProduct.id, size);
+                                setSizePage(false);
+                              }}
+                              className={`cursor-pointer duration-300 ${"text-textMain border border-gray-500 dark:border-[#a08559] hover:bg-gray-300 dark:hover:bg-[#a08559]/70"} duration-500 flex items-center justify-center min-w-10 min-h-8`}
+                            >
+                              {size}
+                            </div>
+                          </div>
+                        ))}
+                      {/* Sizes For Watches */}
+                      {(category === "watches" ||
+                        category === "womenwatches") &&
+                        watchesSize.map((size, index) => (
+                          <div key={index} className="font-sans">
+                            <div
+                              // onMouseEnter={() => setSize(num)}
+                              onClick={() => {
+                                handelAddTocart(activeProduct.id, size);
+                                setSizePage(false);
+                              }}
+                              className={`cursor-pointer duration-300 ${"text-textMain border border-gray-500 dark:border-[#a08559] hover:bg-gray-300 dark:hover:bg-[#a08559]/70"} duration-500 flex items-center justify-center min-w-10 min-h-8 p-1`}
+                            >
+                              {size}
+                              <span className="text-[12px] ml-1">mm</span>
+                            </div>
+                          </div>
+                        ))}
                     </div>
                   </div>
                 </div>
@@ -405,3 +486,8 @@ const Page = () => {
 };
 
 export default Page;
+
+// JSON.stringify → تحويل Array/Object إلى String للحفظ
+
+// JSON.parse → تحويل String إلى Array/Object للقراءة
+// #1a2334 #a08559

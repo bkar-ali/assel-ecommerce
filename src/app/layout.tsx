@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Providers from "./Providers";
+import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
   title: {
@@ -18,7 +19,16 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="bg-primary duration-500">
-        <Providers>{children}</Providers>
+        <Providers>
+          {children}
+          <Toaster
+            position="bottom-right"
+            toastOptions={{
+              className:
+                "bg-white text-black dark:bg-[#1a2334] dark:text-white",
+            }}
+          />
+        </Providers>
       </body>
     </html>
   );

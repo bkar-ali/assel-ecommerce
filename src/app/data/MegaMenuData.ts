@@ -93,7 +93,7 @@ const megaMenuData: Record<"men" | "women" | "sale", MegaMenuData> = {
       {
         heading: "Shoes",
         items: ["Sneakers", "Heels"],
-        links: ["/categores/casual", "/categores/heels"],
+        links: ["/categores/sneakers", "/categores/heels"],
       },
       {
         heading: "Accessories",

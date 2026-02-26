@@ -8,7 +8,7 @@ export interface Product {
   images: string[];
   discountPercentage: number;
   brand: string;
-  size: number;
+  size: number | string;
   link: string;
   quantity: number;
   reviews: [

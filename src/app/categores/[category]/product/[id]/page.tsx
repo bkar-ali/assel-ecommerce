@@ -27,8 +27,7 @@ import Sections from "@/app/components/Sections";
 import Testimonials from "@/app/components/Testimonials";
 import Footer from "@/app/components/Footer";
 import SliderBanner from "@/app/components/SliderBanner";
-// import { Product } from "@/store/asselTypes";
-// import { increaseQty } from "@/store/cartSlice";
+import toast from "react-hot-toast";
 
 const categoryThunk: Record<CategoryKey, categoryThunkType> = {
   men: fetchMen,
@@ -41,12 +40,23 @@ const categoryThunk: Record<CategoryKey, categoryThunkType> = {
 };
 const Page = () => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  const [size, setSize] = useState<number | null>(null);
+  const [size, setSize] = useState<number | string | null>(null);
   const [choosed, setChoosed] = useState<boolean>(false);
-  const fitsNum = [];
-  for (let i = 5; i <= 11; i += 0.5) {
-    fitsNum.push(i);
-  }
+
+  const clotheSizesArr = ["S", "M", "L", "XL", "2XL", "3XL"];
+
+  const fitsNum = useMemo(() => {
+    const arr = [];
+    for (let i = 30; i <= 45; i += 1) arr.push(i);
+    return arr;
+  }, []);
+
+  const watchesSize = useMemo(() => {
+    const arr = [];
+    for (let i = 14; i <= 20; i += 1) arr.push(i);
+    return arr;
+  }, []);
+
   const { id, category } = useParams();
   const assel = useAppSelector((state) => state.assel);
   const dispatch = useAppDispatch();
@@ -84,10 +94,37 @@ const Page = () => {
   const handelAddToCart = () => {
     if (!choosed || !product || size === null) return;
     const productWithSize = { ...product, size: size, link: category };
-    dispatch(openCart());
+    // dispatch(openCart());
+    toast.success("Added To Cart 🛒");
     dispatch(addToCart(productWithSize));
     // console.log(productWithSize);
   };
+
+  type SwitchCategory =
+    | "men"
+    | "women"
+    | "watches"
+    | "womenwatches"
+    | "jewelry"
+    | "sneakers"
+    | "heels";
+
+  const sizeNotes = (category: SwitchCategory | string) => {
+    switch (category) {
+      case "men":
+      case "women":
+        return "For the best fit, we recommend selecting your size based on both weight and body measurements. If you are between sizes, consider sizing up for a more relaxed fit.";
+      case "watches":
+      case "womenwatches":
+        return "Please make sure to check your wrist size before selecting the watch.";
+      case "sneakers":
+      case "heels":
+        return "We recommend selecting your usual shoe size. If you are between sizes, consider sizing up for a more comfortable fit.";
+      case "jewelry":
+        return "Please check the diameter and thickness before purchasing to ensure it matches your piercing size.";
+    }
+  };
+
   return (
     <>
       {product && (
@@ -160,28 +197,69 @@ const Page = () => {
               </div>
               <div className="flex flex-col w-full md:w-1/4 md:border-r border-[#212121]/40 dark:border-[#a08559]/40">
                 <div className="gap-3 md:gap-1 grid grid-cols-5 h-[80%] w-full mb-3">
-                  {fitsNum.map((num, index) => (
-                    <div key={index} className="font-sans">
-                      <div
-                        onClick={() => {
-                          setActiveIndex(index);
-                          setChoosed(true);
-                          setSize(num);
-                        }}
-                        className={`cursor-pointer duration-300 ${
-                          activeIndex === index
-                            ? "text-white bg-[#212121] dark:bg-[#a08559] border border-gray-500 dark:border-[#a08559]"
-                            : "text-textMain border border-gray-500 dark:border-[#a08559] hover:bg-gray-300 dark:hover:bg-[#a08559]/70"
-                        } duration-500 flex items-center justify-center w-14 h-10`}
-                      >
-                        {num}
+                  {(category === "men" ||
+                    category === "women" ||
+                    category === "jewelry") &&
+                    clotheSizesArr.map((num, index) => (
+                      <div key={index} className="font-sans">
+                        <div
+                          onClick={() => {
+                            setActiveIndex(index);
+                            setChoosed(true);
+                            setSize(num);
+                          }}
+                          className={`cursor-pointer duration-300 ${
+                            activeIndex === index
+                              ? "text-white bg-[#212121] dark:bg-[#a08559] border border-gray-500 dark:border-[#a08559]"
+                              : "text-textMain border border-gray-500 dark:border-[#a08559] hover:bg-gray-300 dark:hover:bg-[#a08559]/70"
+                          } duration-500 flex items-center justify-center w-14 h-10`}
+                        >
+                          {num}
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  {(category === "watches" || category === "womenwatches") &&
+                    watchesSize.map((num, index) => (
+                      <div key={index} className="font-sans">
+                        <div
+                          onClick={() => {
+                            setActiveIndex(index);
+                            setChoosed(true);
+                            setSize(num);
+                          }}
+                          className={`cursor-pointer duration-300 ${
+                            activeIndex === index
+                              ? "text-white bg-[#212121] dark:bg-[#a08559] border border-gray-500 dark:border-[#a08559]"
+                              : "text-textMain border border-gray-500 dark:border-[#a08559] hover:bg-gray-300 dark:hover:bg-[#a08559]/70"
+                          } duration-500 flex items-center justify-center w-14 h-10`}
+                        >
+                          {num}
+                          <span className="text-[12px] ml-1">mm</span>
+                        </div>
+                      </div>
+                    ))}
+                  {(category === "heels" || category === "sneakers") &&
+                    fitsNum.map((num, index) => (
+                      <div key={index} className="font-sans">
+                        <div
+                          onClick={() => {
+                            setActiveIndex(index);
+                            setChoosed(true);
+                            setSize(num);
+                          }}
+                          className={`cursor-pointer duration-300 ${
+                            activeIndex === index
+                              ? "text-white bg-[#212121] dark:bg-[#a08559] border border-gray-500 dark:border-[#a08559]"
+                              : "text-textMain border border-gray-500 dark:border-[#a08559] hover:bg-gray-300 dark:hover:bg-[#a08559]/70"
+                          } duration-500 flex items-center justify-center w-14 h-10`}
+                        >
+                          {num}
+                        </div>
+                      </div>
+                    ))}
                 </div>
                 <p className="text-[12px] text-textCard opacity-70 tracking-wider">
-                  Tree Breezer is soft and stretchy. Most find their usual size
-                  fits well, though the toe box may feel snug at first
+                  {sizeNotes(category)}
                 </p>
               </div>
               <div className="w-full md:w-1/4 flex flex-col justify-center items-center">
