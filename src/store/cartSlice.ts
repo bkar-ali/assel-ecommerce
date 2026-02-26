@@ -3,7 +3,7 @@ import { Product } from "./asselTypes";
 
 interface CartItemKey {
   id: number;
-  size: number;
+  size: number | string;
 }
 
 interface cartState {
